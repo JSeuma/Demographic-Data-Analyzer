@@ -1,0 +1,6 @@
+# What percentage of people with advanced education (Bachelors, Masters, or Doctorate) make more than 50K?
+dfaded = df[(df["education"]== "Bachelors")| (df["education"]=="Masters") | (df["education"]=="Doctorate")]
+dfaded50 = dfaded[dfaded["salary"] == ">50K"]
+
+AdEdu = dfaded50.shape[0] * 100 / df.shape[0]
+print(AdEdu)
