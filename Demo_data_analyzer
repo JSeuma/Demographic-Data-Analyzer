@@ -1,0 +1,12 @@
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv("Data/adult.data.csv")
+
+# How many people of each race are represented in this dataset? This should be a Pandas series with race names as the index labels. (race column)
+
+rc1 = list(df['race'].value_counts())
+rc2 = list(df['race'].unique())
+
+rc = pd.Series(rc1, index=[rc2])
+print(rc)
