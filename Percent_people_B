@@ -1,6 +1,0 @@
-# What is the percentage of people who have a Bachelor's degree?
-
-dfbch = df[df["education"]== "Bachelors"]
-
-BchD = dfbch.shape[0] * 100 / df.shape[0]
-print(BchD)

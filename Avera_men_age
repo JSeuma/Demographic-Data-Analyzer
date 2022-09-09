@@ -1,4 +1,0 @@
-# What is the average age of men?
-
-dfmale = df[df["sex"] == "Male"]
-print(round(dfmale["age"].mean(),1))
