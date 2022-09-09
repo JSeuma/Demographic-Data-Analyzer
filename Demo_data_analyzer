@@ -10,3 +10,95 @@ rc2 = list(df['race'].unique())
 
 rc = pd.Series(rc1, index=[rc2])
 print(rc)
+
+
+# How many people of each race are represented in this dataset? This should be a Pandas series with race names as the index labels. (race column)
+
+r1 = df[df["race"]=="White"].shape[0]
+r2 = df[df["race"]=="Black"].shape[0]
+r3 = df[df["race"]=="Asian-Pac-Islander"].shape[0]
+r4 = df[df["race"]=="Amer-Indian-Eskimo"].shape[0]
+r5 = df[df["race"]=="Other"].shape[0]
+
+rt= pd.Series([r1,r2,r3,r4,r5],index=["White","Black","Asian-Pac-Islander","Amer-Indian-Eskimo","Other"],name="races column")
+print(rt)
+
+
+# What is the average age of men?
+
+dfmale = df[df["sex"] == "Male"]
+print(round(dfmale["age"].mean(),1))
+
+
+# What is the average age of men?
+
+average_age_men = round(df[df['sex'] == 'Male']['age'].mean(), 1)
+print(average_age_men)
+
+
+# What is the percentage of people who have a Bachelor's degree?
+
+dfbch = df[df["education"]== "Bachelors"]
+
+BchD = dfbch.shape[0] * 100 / df.shape[0]
+print(BchD)
+
+
+# What percentage of people with advanced education (Bachelors, Masters, or Doctorate) make more than 50K?
+dfaded = df[(df["education"]== "Bachelors")| (df["education"]=="Masters") | (df["education"]=="Doctorate")]
+dfaded50 = dfaded[dfaded["salary"] == ">50K"]
+
+AdEdu = dfaded50.shape[0] * 100 / df.shape[0]
+print(AdEdu)
+
+
+# What percentage of people without advanced education make more than 50K?
+dfnad = df[(df["education"]!= "Bachelors") & (df["education"]!="Masters") & (df["education"]!="Doctorate")]
+
+dfnad50 = dfnad[dfnad["salary"] == ">50K"]
+
+
+NAdEdu = dfnad50.shape[0] * 100 / df.shape[0]
+print(NAdEdu)
+
+
+# What is the minimum number of hours a person works per week?
+
+mnh = df["hours-per-week"].min()
+print(mnh)
+
+
+# What percentage of the people who work the minimum number of hours per week have a salary of more than 50K?
+
+dfhmin = df[df["hours-per-week"] == df["hours-per-week"].min()]
+
+dfhmin50 = dfhmin[dfhmin["salary"] == ">50K"]
+
+MinH50k = dfhmin50.shape[0] * 100 / dfhmin.shape[0]
+print(MinH50k)
+
+
+# What country has the highest percentage of people that earn >50K?
+
+countries = list(df['native-country'].unique())
+d = {}
+for country in countries:
+        total = df[df['native-country'] == country]['native-country'].shape[0]
+        dflast = df['native-country'] == country
+        df50 = df["salary"] == ">50K"
+        rich_people = df[dflast & df50].shape[0]
+        percent = round((rich_people/total)*100, 1)
+        d[country] = percent
+
+highest_earning_country = sorted(d.items(), key=lambda x: x[1], reverse=True)[0][0]
+highest_earning_country_percentage = sorted(d.items(), key=lambda x: x[1], reverse=True)[0][1]
+
+print(highest_earning_country, ":", highest_earning_country_percentage)
+
+
+# Identify the most popular occupation for those who earn >50K in India.
+
+dfIn50 = df[(df["salary"] == ">50K") & (df["native-country"] == "India")]
+
+mpo = dfIn50["occupation"].value_counts().index[0]
+print(mpo)
